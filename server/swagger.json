@@ -1,0 +1,168 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Sensor Services",
+    "description": "Sensor Service APIs"
+  },
+  "host": "localhost:3000",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/sensors": {
+      "get": {
+        "description": "Returns all sensers",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "sensor response",
+            "schema": {
+              "title": "sensors",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Sensor"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Register a new sensor",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "sensor",
+            "in": "body",
+            "description": "sensor to register",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewSensor"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "sensor created",
+            "schema": {
+              "title": "Sensor",
+              "type": "object",
+              "$ref": "#/definitions/NewSensor"
+            }
+          }
+        }
+      }
+    },
+    "/sensors/{id}" : {
+      "put": {
+        "description": "update sensor info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of the sensor to update",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sensor",
+            "in": "body",
+            "description": "update sensor info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Sensor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sensor updated",
+            "schema": {
+              "title": "Sensor",
+              "type": "object",
+              "$ref": "#/definitions/Sensor"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Sensor": {
+      "type": "object",
+      "allOf": [
+        {
+          "required": [],
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "sensor id"
+            },
+            "container": {
+              "type": "string",
+              "description": "container id or name"
+            },
+            "currentTemperature": {
+              "type": "integer",
+              "format": "int32",
+              "description": "current temperature"
+            },
+            "minTemperature": {
+              "type": "integer",
+              "format": "int32",
+              "description": "temperature lower range"
+            },
+            "maxTemperature": {
+              "type": "integer",
+              "format": "int32",
+              "description": "temperature upper range"
+            }
+          }
+        }
+      ]
+    },
+    "NewSensor": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Sensor"
+        },
+        {
+          "required": [
+            "id",
+            "container",
+            "minTemperature",
+            "maxTemperature"
+          ]
+        }
+      ]
+    },
+    "ErrorModel": {
+      "type": "object",
+      "required": [
+        "errors"
+      ],
+      "properties": {
+        "errors": {
+          "type": "array"
+        }
+      }
+    }
+  }
+}
