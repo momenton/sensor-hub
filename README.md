@@ -3,7 +3,7 @@ There are a couple of solutions depending to the business model. i.e. one-off pr
 
 All solutions were designed around APIs, this means, the solutions may have different client devices or use different ways of notifying user, i.e. sms, mobile app push notification, web push notification etc., or even web sockets and polling.
 
-![Alt text](/solution.png?raw=true "Solution")
+![Alt text](/doc-images/solution.png?raw=true "Solution")
 
 The particular solution demonstrated here is the simplest one and for the customer only using web push notification.
 
@@ -17,10 +17,12 @@ This will install the requisite dependencies and start the server on port 3000.
 
 ** Use chrome
 
-Open `http://localhost:3000/` to access to main page and subscribe notification.
+Open `http://localhost:3000/` to access the main page and subscribe notification.
 Open `http://localhost:3000/api-docs` and use swagger UI to maintain sensor data: -
 * register sensor
 * update current temperature to trigger notification
+
+Detailed instruction can be found in the last section.
 
 ** if server ever restarted, Open dev tool -> Application -> Service worker -> unregister and refresh the page to subscribe again.
 
@@ -42,3 +44,20 @@ However, this creates extra complexity for users as they will need to install ex
 * Use `npm run test:coverage` to run all tests and see coverage report
 * Use `npm run test:unit` to run only unit tests
 * Use `npm run test:integration` to run only integration tests
+
+## Instruction
+1. Open `http://localhost:3000/api-docs` and use post to register new sensors.
+
+![Alt text](/doc-images/1-register.png?raw=true "register sensors")
+
+2. Open `http://localhost:3000/` to see sensor data and subscribe notifications.
+
+![Alt text](/doc-images/2-main.png?raw=true "main page")
+
+3. After subscribed, a "subscribed successfully" notification should appear.
+
+![Alt text](/doc-images/3-subscribed.png?raw=true "subscribed successfully")
+
+4. Open `http://localhost:3000/api-docs` and use put to update current temperature for a sensor. If current temperature is out of range, a notification should appear.
+
+![Alt text](/doc-images/4-notification.png?raw=true "subscribed successfully")
